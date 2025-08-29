@@ -1,5 +1,5 @@
 API
-const GITHUB_API_URL = 'https://api.github.com/search/users';
+const GITHUB_API_URL = "https://api.github.com/search/users?q";
 
 /**
  * Searches for GitHub users based on username, location, and min repositories.
