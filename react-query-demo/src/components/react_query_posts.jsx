@@ -7,12 +7,12 @@ const queryClient = new QueryClient();
 // This is the main application component. All logic is contained here to demonstrate
 // a single-file application structure.
 function App() {
-  // Use the useQuery hook to fetch data. It handles the request, loading, and error states.
-  // The first argument, ['posts'], is the query key. React Query uses this key to
-  // manage caching and refetching.
-  // The second argument is the async function that fetches the data.
+  // --- Step 2: Create a Component to Fetch Data ---
+  // The `useQuery` hook is the core of this component, handling the data fetching.
   const { isLoading, isError, data, error, refetch, isFetching } = useQuery({
+    // The query key uniquely identifies this data in the cache.
     queryKey: ['posts'],
+    // The query function fetches the data from the API.
     queryFn: async () => {
       const res = await fetch('https://jsonplaceholder.typicode.com/posts');
       if (!res.ok) {
@@ -20,12 +20,15 @@ function App() {
       }
       return res.json();
     },
-
-    staleTime: 1000 * 60 * 5,
-   
+    // --- Step 3: Implement Features for Caching and Updating Data ---
+    // Caching is demonstrated here with a staleTime of 5 minutes.
+    // React Query will serve cached data if it's less than 5 minutes old.
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    // cacheTime controls how long unused data stays in the cache.
+    cacheTime: 1000 * 60 * 10, // 10 minutes
   });
 
-  // --- Step 2: Displaying States and Data ---
+  // Handle loading state from Step 2
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
@@ -34,6 +37,7 @@ function App() {
     );
   }
 
+  // Handle error state from Step 2
   if (isError) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
@@ -56,7 +60,7 @@ function App() {
           to manually refetch data.
         </p>
 
-        {/* Refetch button to demonstrate manual data updates */}
+        {/* This button triggers a manual refetch to update the data. */}
         <div className="text-center mb-8">
           <button
             onClick={() => refetch()}
@@ -72,7 +76,7 @@ function App() {
           </button>
         </div>
 
-        {/* Display the list of posts fetched from the API */}
+        {/* The fetched data is mapped to a list here. */}
         <ul className="space-y-6">
           {data.map((post) => (
             <li key={post.id} className="bg-gray-50 p-6 rounded-xl shadow-sm border border-gray-200">
@@ -86,8 +90,7 @@ function App() {
   );
 }
 
-// The root component of the application, which provides the QueryClient to all
-// nested components.
+// The root component, which provides the QueryClient context to all child components.
 export default function AppWrapper() {
   return (
     <QueryClientProvider client={queryClient}>
