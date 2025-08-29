@@ -28,6 +28,12 @@ function PostsComponent() {
     staleTime: 1000 * 60 * 5, // 5 minutes
     // cacheTime controls how long unused data stays in the cache.
     cacheTime: 1000 * 60 * 10, // 10 minutes
+    // This will refetch data automatically when the browser window regains focus.
+    refetchOnWindowFocus: true,
+    // This keeps the previous data visible while a new fetch is happening in the background.
+    // NOTE: In TanStack Query v4/v5, `keepPreviousData` has been deprecated in favor of `placeholderData`.
+    // Using it here to directly address the request.
+    keepPreviousData: true,
   });
 
   // Handle loading state from Step 2
