@@ -4,9 +4,8 @@ import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-quer
 // Initialize the QueryClient outside the component tree to avoid re-creation on every render.
 const queryClient = new QueryClient();
 
-// This is the main application component. All logic is contained here to demonstrate
-// a single-file application structure.
-function App() {
+// This component is now named PostsComponent as requested.
+function PostsComponent() {
   // --- Step 2: Create a Component to Fetch Data ---
   // The `useQuery` hook is the core of this component, handling the data fetching.
   const { isLoading, isError, data, error, refetch, isFetching } = useQuery({
@@ -94,7 +93,7 @@ function App() {
 export default function AppWrapper() {
   return (
     <QueryClientProvider client={queryClient}>
-      <App />
+      <PostsComponent />
     </QueryClientProvider>
   );
 }
