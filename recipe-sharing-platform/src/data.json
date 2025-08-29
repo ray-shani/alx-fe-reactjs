@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "Spaghetti Carbonara",
+    "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
+    "image": "https://images.unsplash.com/photo-1588013277154-8c8872580a6b"
+  },
+  {
+    "id": 2,
+    "title": "Chicken Tikka Masala",
+    "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
+    "image": "https://images.unsplash.com/photo-1594236814676-e1e3e7a08b68"
+  },
+  {
+    "id": 3,
+    "title": "Vegan Lentil Soup",
+    "summary": "A hearty and nutritious soup made with red lentils, vegetables, and aromatic spices.",
+    "image": "https://images.unsplash.com/photo-1628170889240-a19f6a738c64"
+  },
+  {
+    "id": 4,
+    "title": "Classic Beef Burgers",
+    "summary": "Juicy beef patties grilled to perfection and served on a toasted bun with fresh toppings.",
+    "image": "https://images.unsplash.com/photo-1568901346379-b1d8e12b8f88"
+  }
+]
