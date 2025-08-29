@@ -1,9 +1,11 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import RecipeList from './components/RecipeList';
 import AddRecipeForm from './components/AddRecipeForm';
-import SearchBar from './components/SearchBar'; // Import the new component
+import SearchBar from './components/SearchBar';
 import RecipeDetails from './components/RecipeDetails';
 import EditRecipeForm from './components/EditRecipeForm';
+import FavoritesList from './components/FavoritesList';
+import RecommendationsList from './components/RecommendationsList';
 
 function App() {
   return (
@@ -18,8 +20,16 @@ function App() {
         <Routes>
           <Route path="/" element={
             <>
-              <SearchBar /> {/* Render the search bar here */}
-              <RecipeList />
+              <SearchBar />
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div>
+                  <RecipeList />
+                </div>
+                <div>
+                  <RecommendationsList />
+                  <FavoritesList />
+                </div>
+              </div>
             </>
           } />
           <Route path="/add" element={<AddRecipeForm />} />
