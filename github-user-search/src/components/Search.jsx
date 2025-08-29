@@ -40,22 +40,37 @@ const Search = () => {
     <div className="flex flex-col items-center p-8 bg-gray-100 min-h-screen">
       <h1 className="text-4xl font-bold mb-8">GitHub User Search</h1>
       
-      <form onSubmit={handleSearch} className="w-full max-w-md flex space-x-2 mb-8">
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Enter GitHub username"
-          className="flex-grow p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow"
-        />
-        <button
-          type="submit"
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-        >
-          Search
-        </button>
-      </form>
-
+      <form onSubmit={handleSearch} className="w-full max-w-lg p-6 bg-white rounded-lg shadow-md mb-8">
+  <div className="flex flex-col space-y-4">
+    <input
+      type="text"
+      value={username}
+      onChange={(e) => setUsername(e.target.value)}
+      placeholder="Enter GitHub username (e.g., torvalds)"
+      className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    <input
+      type="text"
+      value={location}
+      onChange={(e) => setLocation(e.target.value)}
+      placeholder="Filter by location (e.g., Canada)"
+      className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    <input
+      type="number"
+      value={minRepos}
+      onChange={(e) => setMinRepos(e.target.value)}
+      placeholder="Minimum repositories"
+      className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+  <button
+    type="submit"
+    className="mt-4 w-full px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+  >
+    Search
+  </button>
+</form>
       {}
       {loading && (
         <div className="text-gray-600 font-medium">Loading...</div>
