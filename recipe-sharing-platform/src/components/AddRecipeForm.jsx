@@ -11,34 +11,36 @@ const AddRecipeForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevents the default form submission and page reload
+
+    // **Validation Logic Starts Here**
     const newErrors = {};
     let isValid = true;
 
-    // Validation for recipeTitle
+    // Validate Recipe Title
     if (!recipeTitle.trim()) {
       newErrors.recipeTitle = 'Recipe title is required.';
       isValid = false;
     }
 
-    // Validation for ingredients (at least two items)
+    // Validate Ingredients (ensure at least two items)
     const ingredientsArray = ingredients.split('\n').filter(item => item.trim() !== '');
     if (ingredientsArray.length < 2) {
       newErrors.ingredients = 'Please list at least two ingredients.';
       isValid = false;
     }
 
-    // Validation for preparationSteps
+    // Validate Preparation Steps
     if (!preparationSteps.trim()) {
       newErrors.preparationSteps = 'Preparation steps are required.';
       isValid = false;
     }
 
     setErrors(newErrors);
+    // **Validation Logic Ends Here**
 
     if (isValid) {
       console.log('Form submitted successfully:', { recipeTitle, ingredients, preparationSteps });
-      // Here you would typically send the data to a server
-      // Reset form fields after successful submission
+     
       setRecipeTitle('');
       setIngredients('');
       setPreparationSteps('');
