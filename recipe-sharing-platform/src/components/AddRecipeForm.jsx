@@ -9,38 +9,42 @@ const AddRecipeForm = () => {
   // State for validation errors
   const [errors, setErrors] = useState({});
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevents the default form submission and page reload
-
-    // **Validation Logic Starts Here**
+  /**
+   * Validates all form fields and returns an errors object.
+   * @returns {object} An object containing validation error messages.
+   */
+  const validate = () => {
     const newErrors = {};
-    let isValid = true;
 
-    // Validate Recipe Title
     if (!recipeTitle.trim()) {
       newErrors.recipeTitle = 'Recipe title is required.';
-      isValid = false;
     }
 
-    // Validate Ingredients (ensure at least two items)
     const ingredientsArray = ingredients.split('\n').filter(item => item.trim() !== '');
     if (ingredientsArray.length < 2) {
       newErrors.ingredients = 'Please list at least two ingredients.';
-      isValid = false;
     }
 
-    // Validate Preparation Steps
     if (!preparationSteps.trim()) {
       newErrors.preparationSteps = 'Preparation steps are required.';
-      isValid = false;
     }
 
-    setErrors(newErrors);
-    // **Validation Logic Ends Here**
+    return newErrors;
+  };
 
-    if (isValid) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const validationErrors = validate();
+    setErrors(validationErrors);
+
+    // If the errors object is empty, the form is valid
+    const isFormValid = Object.keys(validationErrors).length === 0;
+
+    if (isFormValid) {
       console.log('Form submitted successfully:', { recipeTitle, ingredients, preparationSteps });
-     
+      
+      // Reset form
       setRecipeTitle('');
       setIngredients('');
       setPreparationSteps('');
