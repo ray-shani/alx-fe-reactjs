@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFormik } from 'formik';
+import { useFormik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 const FormikForm = () => {
@@ -15,63 +15,56 @@ const FormikForm = () => {
       password: Yup.string().required('Password is required'),
     }),
     onSubmit: (values) => {
-      // This is where you would send data to your API
       console.log('Formik form submitted successfully:', values);
       alert('Form submitted! Check the console for data.');
     },
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className="max-w-md mx-auto p-4 border rounded shadow">
+    <Form className="max-w-md mx-auto p-4 border rounded shadow">
       <h2 className="text-2xl font-bold mb-4">Register (Formik)</h2>
 
       <div className="mb-4">
         <label htmlFor="username" className="block text-gray-700">Username</label>
-        <input
+        <Field
           id="username"
+          name="username"
           type="text"
-          {...formik.getFieldProps('username')}
           className="w-full p-2 border rounded"
         />
-        {formik.touched.username && formik.errors.username && (
-          <p className="text-red-500 text-sm mt-1">{formik.errors.username}</p>
-        )}
+        <ErrorMessage name="username" component="div" className="text-red-500 text-sm mt-1" />
       </div>
 
       <div className="mb-4">
         <label htmlFor="email" className="block text-gray-700">Email</label>
-        <input
+        <Field
           id="email"
+          name="email"
           type="email"
-          {...formik.getFieldProps('email')}
           className="w-full p-2 border rounded"
         />
-        {formik.touched.email && formik.errors.email && (
-          <p className="text-red-500 text-sm mt-1">{formik.errors.email}</p>
-        )}
+        <ErrorMessage name="email" component="div" className="text-red-500 text-sm mt-1" />
       </div>
 
       <div className="mb-4">
         <label htmlFor="password" className="block text-gray-700">Password</label>
-        <input
+        <Field
           id="password"
+          name="password"
           type="password"
-          {...formik.getFieldProps('password')}
           className="w-full p-2 border rounded"
         />
-        {formik.touched.password && formik.errors.password && (
-          <p className="text-red-500 text-sm mt-1">{formik.errors.password}</p>
-        )}
+        <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1" />
       </div>
-      
-      <button 
-        type="submit" 
+
+      <button
+        type="submit"
         className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
         disabled={formik.isSubmitting}
       >
         Register
       </button>
-    </form>
+    </Form>
   );
 };
 
