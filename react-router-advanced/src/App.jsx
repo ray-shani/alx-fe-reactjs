@@ -1,10 +1,22 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Link, Outlet, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route, Link, Outlet, useParams, Navigate } from 'react-router-dom';
+
+// A simple component to simulate a protected route.
+const ProtectedRoute = ({ isLoggedIn, children }) => {
+  if (!isLoggedIn) {
+    // If not logged in, redirect the user to the home page.
+    return <Navigate to="/" replace />;
+  }
+  return children;
+};
 
 const Home = () => (
   <div className="p-8 text-center bg-gray-100 rounded-lg shadow-lg">
     <h2 className="text-3xl font-bold mb-4 text-gray-800">Welcome to the Home Page</h2>
     <p className="text-gray-600">Explore our site using the navigation above!</p>
+    <p className="mt-4 text-sm text-gray-500">
+      Try navigating to "Profile" without logging in to see the protected route in action.
+    </p>
   </div>
 );
 
@@ -104,6 +116,12 @@ const Blog = () => (
 );
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleAuthClick = () => {
+    setIsLoggedIn(!isLoggedIn);
+  };
+
   return (
     <BrowserRouter>
       <div className="font-sans antialiased text-gray-900 bg-gray-200 min-h-screen p-8">
@@ -115,23 +133,39 @@ function App() {
             }
           `}
         </style>
-        <header className="mb-8 p-4 bg-white rounded-lg shadow-md">
-          <nav className="flex justify-center space-x-6 text-xl">
+        <header className="mb-8 p-4 bg-white rounded-lg shadow-md flex justify-between items-center">
+          <nav className="flex space-x-6 text-xl">
             <Link to="/" className="text-blue-600 hover:text-blue-800 font-medium transition duration-300 ease-in-out">Home</Link>
             <Link to="/about" className="text-blue-600 hover:text-blue-800 font-medium transition duration-300 ease-in-out">About</Link>
             <Link to="/profile" className="text-blue-600 hover:text-blue-800 font-medium transition duration-300 ease-in-out">Profile</Link>
             <Link to="/blog" className="text-blue-600 hover:text-blue-800 font-medium transition duration-300 ease-in-out">Blog</Link>
           </nav>
+          <button
+            onClick={handleAuthClick}
+            className={`px-4 py-2 rounded-lg text-white font-medium transition duration-300 ease-in-out ${
+              isLoggedIn ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'
+            }`}
+          >
+            {isLoggedIn ? 'Log Out' : 'Log In'}
+          </button>
         </header>
 
         <main className="container mx-auto">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            {/* Nested Route Configuration */}
-            <Route path="/profile" element={<Profile />}>
+            {/* The protected route setup. It checks isLoggedIn before rendering child routes. */}
+            <Route
+              path="/profile/*"
+              element={
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            >
               <Route path="details" element={<ProfileDetails />} />
               <Route path="settings" element={<ProfileSettings />} />
+              <Route path="*" element={<Navigate to="details" replace />} /> {/* Redirects /profile to /profile/details */}
             </Route>
             {/* Dynamic Route Configuration */}
             <Route path="/blog" element={<Blog />} />
