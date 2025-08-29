@@ -3,9 +3,7 @@
 import React, { useState } from 'react';
 import { fetchUserData } from '../services/githubService';
 
-/**
- * A component that handles user input for searching GitHub users and displays the results.
- */
+
 const Search = () => {
   const [username, setUsername] = useState('');
   const [user, setUser] = useState(null);
@@ -29,7 +27,7 @@ const Search = () => {
       setUser(userData);
     } catch (err) {
       if (err.response && err.response.status === 404) {
-        setError(new Error('Looks like we can\'t find the user.'));
+        setError(new Error("Looks like we can't find the user."));
       } else {
         setError(new Error('An error occurred while fetching data. Please try again.'));
       }
@@ -58,7 +56,7 @@ const Search = () => {
         </button>
       </form>
 
-      {/* Conditional rendering for loading, error, and user profile */}
+      {}
       {loading && (
         <div className="text-gray-600 font-medium">Loading...</div>
       )}
