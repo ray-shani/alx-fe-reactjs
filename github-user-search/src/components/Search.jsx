@@ -106,4 +106,15 @@ const Search = () => {
   );
 };
 
+// In your Search.jsx or Results component
+{users && users.length > 0 && (
+  <ul>
+    {users.map(user => (
+      <li key={user.id}>
+        {/* ... display user info ... */}
+      </li>
+    ))}
+  </ul>
+)}
+
 export default Search;
