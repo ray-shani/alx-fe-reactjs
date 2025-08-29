@@ -4,6 +4,15 @@ import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-quer
 // Initialize the QueryClient outside the component tree to avoid re-creation on every render.
 const queryClient = new QueryClient();
 
+// This is the new, named function to handle data fetching, as requested.
+const fetchPosts = async () => {
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+  if (!res.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return res.json();
+};
+
 // This component is now named PostsComponent as requested.
 function PostsComponent() {
   // --- Step 2: Create a Component to Fetch Data ---
@@ -11,14 +20,8 @@ function PostsComponent() {
   const { isLoading, isError, data, error, refetch, isFetching } = useQuery({
     // The query key uniquely identifies this data in the cache.
     queryKey: ['posts'],
-    // The query function fetches the data from the API.
-    queryFn: async () => {
-      const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-      if (!res.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return res.json();
-    },
+    // The query function now calls the separate fetchPosts function.
+    queryFn: fetchPosts,
     // --- Step 3: Implement Features for Caching and Updating Data ---
     // Caching is demonstrated here with a staleTime of 5 minutes.
     // React Query will serve cached data if it's less than 5 minutes old.
